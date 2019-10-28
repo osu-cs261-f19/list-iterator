@@ -19,8 +19,15 @@ int main(int argc, char** argv) {
   }
 
   /*
-   * How do I print the values from the list??
+   * The code below generates compiler errors because I don't have access to
+   * the internals of struct list or to struct link.  Without those things,
+   * how do I print the values from the list?
    */
+  printf("== List contents:\n");
+  struct link* curr = list->head;
+  while (curr) {
+    printf("  - %d\n", *((int*)curr->val));
+  }
 
   list_free(list);
   free(data);
