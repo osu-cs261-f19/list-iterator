@@ -27,6 +27,7 @@ int main(int argc, char** argv) {
   struct link* curr = list->head;
   while (curr) {
     printf("  - %d\n", *((int*)curr->val));
+    curr = curr->next;
   }
 
   list_free(list);
