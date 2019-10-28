@@ -80,3 +80,60 @@ void list_insert(struct list* list, void* val) {
   link->next = list->head;
   list->head = link;
 }
+
+/**************************************************************************
+ **
+ ** Iterator implementation
+ **
+ **************************************************************************/
+
+/*
+ * This is the structure used to represent a lined list iterator.  The way we
+ * typically iterate through a linked list is to keep a pointer to the current
+ * link, starting with the head of the list, and move that pointer from link
+ * to link, via `next` pointers.  The structure here is designed to do exactly
+ * that, keeping track of the current link in the pointer `curr`.
+ */
+struct list_iterator {
+  struct link* curr;
+};
+
+/*
+ * This function creates a new list iterator.  The iterator is tied to a
+ * a specific list (the parameter `list`).  The iterator is specifically
+ * initialized to start iterating at the head of this list.
+ */
+struct list_iterator* list_iterator_create(struct list* list) {
+  struct list_iterator* iter = malloc(sizeof(struct list_iterator));
+  iter->curr = list->head;
+  return iter;
+}
+
+/*
+ * This function frees a list iterator, undoing the memory allocation from
+ * list_iterator_create().
+ */
+void list_iterator_free(struct list_iterator* iter) {
+  free(iter);
+}
+
+/*
+ * This function implements the iterator's next() function.  It specifically
+ * returns the value of the current link and then updates the iterator to
+ * point to the next link in the list.
+ */
+void* list_iterator_next(struct list_iterator* iter) {
+  void* val = iter->curr->val;
+  iter->curr = iter->curr->next;
+  return val;
+}
+
+/*
+ * This function implements the iterator's has_next() function.  It returns
+ * "true" (i.e. 1) if there is at least one more value to examine in the
+ * iteration and "false" (i.e. 0) when the iteration is over (i.e. when the
+ * `curr` pointer has reached the end of the list and points to NULL).
+ */
+int list_iterator_has_next(struct list_iterator* iter) {
+  return iter->curr != NULL;
+}

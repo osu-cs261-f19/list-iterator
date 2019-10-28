@@ -20,4 +20,15 @@ struct list* list_create();
 void list_free(struct list* list);
 void list_insert(struct list* list, void* val);
 
+/*
+ * The linked list iterator interface is defined below.  Refer to list.c for
+ * documentation about each of these structures and functions.
+ */
+struct list_iterator;
+
+struct list_iterator* list_iterator_create(struct list* list);
+void list_iterator_free(struct list_iterator* iter);
+void* list_iterator_next(struct list_iterator* iter);
+int list_iterator_has_next(struct list_iterator* iter);
+
 #endif

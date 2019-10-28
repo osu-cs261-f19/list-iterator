@@ -24,12 +24,15 @@ int main(int argc, char** argv) {
    * how do I print the values from the list?
    */
   printf("== List contents:\n");
-  struct link* curr = list->head;
-  while (curr) {
-    printf("  - %d\n", *((int*)curr->val));
-    curr = curr->next;
+  // struct link* curr = list->head;
+  struct list_iterator* iter = list_iterator_create(list);
+  while (list_iterator_has_next(iter) /*curr*/) {
+    printf("  - %d\n", *((int*)list_iterator_next(iter)));
+    // printf("  - %d\n", *((int*)curr->val));
+    // curr = curr->next;
   }
 
+  list_iterator_free(iter);
   list_free(list);
   free(data);
 
